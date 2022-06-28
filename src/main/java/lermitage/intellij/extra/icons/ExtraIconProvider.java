@@ -82,87 +82,67 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 ofIcon("ide_yaml",
                     "yaml.svg", "extra-icons/ide/yaml.svg",
                     "IDE icon: YAML")
-                    .altIcons("extra-icons/ide/yaml_alt.svg"),
+                    .altIcons("extra-icons/ide/yaml_alt.svg", "extra-icons/ide/yaml_alt2.svg"),
 
                 //
                 // folder
                 //
-                ofDir("dir_circleci", "extra-icons/folder_circleci.svg", "Circle CI (regex): '^/\\.circleci$' folder")
-                    .regex("^/\\.circleci$")
+                ofDir("dir_circleci", "extra-icons/folder_circleci.svg", "Circle CI: .circleci folder")
                     .eq(".circleci"),
-                ofDir("dir_dependabot", "extra-icons/folder_dependabot.svg", "Dependabot (regex): '^/\\.dependabot$' folder")
-                    .regex("^/\\.dependabot$")
+                ofDir("dir_dependabot", "extra-icons/folder_dependabot.svg", "Dependabot: .dependabot folder")
                     .eq(".dependabot"),
-                ofDir("dir_docker", "extra-icons/folder_docker.svg", "Docker (regex): '^/docker$' folder")
-                    .regex("^/docker$")
+                ofDir("dir_docker", "extra-icons/folder_docker.svg", "Docker: docker folder")
                     .eq("docker")
                     .tags(ModelTag.DOCKER),
-                ofDir("dir_github", "extra-icons/folder_github.svg", "Github (regex): '^/\\.github$' folder")
-                    .regex("^/\\.github$")
+                ofDir("dir_github", "extra-icons/folder_github.svg", "Github: .github folder")
                     .eq(".github"),
-                ofDir("dir_gitlab", "extra-icons/folder_gitlab.svg", "Gitlab (regex): '^/\\.gitlab$' folder")
-                    .regex("^/\\.gitlab$")
+                ofDir("dir_gitlab", "extra-icons/folder_gitlab.svg", "Gitlab: .gitlab folder")
                     .eq(".gitlab"),
-                ofDir("dir_gradle", "extra-icons/folder_gradle.svg", "Gradle (regex): '^/gradle$' folder")
-                    .regex("^/gradle$")
+                ofDir("dir_gradle", "extra-icons/folder_gradle.svg", "Gradle: gradle folder")
                     .eq("gradle"),
-                ofDir("dir_idea", "extra-icons/folder_idea.svg", "IntelliJ IDEA (regex): '^/\\.idea$' folder")
-                    .regex("^/\\.idea$")
+                ofDir("dir_idea", "extra-icons/folder_idea.svg", "IntelliJ IDEA: .idea folder")
                     .eq(".idea"),
-                ofDir("dir_ideasandbox", "extra-icons/folder_idea.svg", "IntelliJ IDEA (regex): '^/\\.?idea-sandbox$' folder")
-                    .regex("^/\\.?idea-sandbox$")
+                ofDir("dir_ideasandbox", "extra-icons/folder_idea.svg", "IntelliJ IDEA: .idea-sandbox and idea-sandbox folders")
                     .eq(".idea-sandbox", "idea-sandbox"),
-                ofDir("dir_idearun", "extra-icons/folder_idea.svg", "IntelliJ IDEA 2020+ Run/Debug Configurations (regex): '^/\\.run$' folder")
-                    .regex("^/\\.run$")
+                ofDir("dir_idearun", "extra-icons/folder_idea.svg", "IntelliJ IDEA 2020+ Run/Debug Configurations: .run folder")
                     .eq(".run"),
-                ofDir("dir_jpabuddy", "extra-icons/folder_jpabuddy.svg", "JPA Buddy (regex): '^/\\.jpb$' folder")
-                    .regex("^/\\.jpb$")
+                ofDir("dir_jpabuddy", "extra-icons/folder_jpabuddy.svg", "JPA Buddy: .jpb folder")
                     .eq(".jpb")
                     .altIcons("extra-icons/folder_jpabuddy_alt.svg", "extra-icons/folder_jpabuddy_alt2.svg",
                         "extra-icons/folder_jpabuddy_alt3.svg"),
                 ofDir("dir_mergify", "extra-icons/folder_mergify.svg", "Mergify: .mergify folder")
-                    .regex("^/\\.mergify$")
                     .eq(".mergify"),
-                ofDir("dir_mps", "extra-icons/folder_idea.svg", "JetBrains MPS (regex): '^/\\.mps$' folder")
-                    .regex("^/\\.mps$")
+                ofDir("dir_mps", "extra-icons/folder_idea.svg", "JetBrains MPS: .mps folder")
                     .eq(".mps"),
-                ofDir("dir_mvn", "extra-icons/folder_mvnw.svg", "Maven (regex): '^/\\.mvn$' folder")
-                    .regex("^/\\.mvn$")
+                ofDir("dir_mvn", "extra-icons/folder_mvnw.svg", "Maven: .mvn folder")
                     .eq(".mvn"),
-                ofDir("dir_nuget", "extra-icons/folder_nuget.svg", "Nuget (regex): '^/\\.nuget$' folder")
-                    .regex("^/\\.nuget")
+                ofDir("dir_node_modules", "extra-icons/folder_node_modules.svg", "NodeJS: node_modules folder")
+                    .eq("node_modules")
+                    .altIcons("extra-icons/folder_node_modules_alt.svg", "extra-icons/folder_tmp.svg"),
+                ofDir("dir_nuget", "extra-icons/folder_nuget.svg", "Nuget: .nuget folder")
                     .eq(".nuget"),
-                ofDir("dir_pytest_cache", "extra-icons/folder_tmp.svg", "PyTest cache: '^/\\.pytest_cache$' folder")
-                    .regex("^/\\.pytest_cache$")
+                ofDir("dir_pytest_cache", "extra-icons/folder_tmp.svg", "PyTest cache: .pytest_cache folder")
                     .eq(".pytest_cache")
                     .altIcons("extra-icons/folder_pytest_cache.svg", "extra-icons/folder_pytest_cache_alt.svg"),
-                ofDir("dir_python_venv", "extra-icons/folder_python_venv.svg", "Python Virtual Environment: '^/\\.venv$' folder")
-                    .regex("^/\\.venv$")
+                ofDir("dir_python_venv", "extra-icons/folder_python_venv.svg", "Python Virtual Environment: .venv folder")
                     .eq(".venv")
                     .altIcons("extra-icons/folder_python_venv_alt.svg"),
-                ofDir("dir_python_venv_nodot", "extra-icons/folder_python_venv.svg", "Python Virtual Environment: '^/venv$' folder")
-                    .regex("^/venv$")
+                ofDir("dir_python_venv_nodot", "extra-icons/folder_python_venv.svg", "Python Virtual Environment: venv folder")
                     .eq("venv")
                     .altIcons("extra-icons/folder_python_venv_alt.svg"),
-                ofDir("dir_python_egginfo", "extra-icons/folder_tmp.svg", "Python: '.*\\.egg-info$' folder")
+                ofDir("dir_python_egginfo", "extra-icons/folder_tmp.svg", "Python: .egg-info folder")
                     .end(".egg-info"),
-                ofDir("dir_python_dottox", "extra-icons/folder_tmp.svg", "Python: '.*\\.tox$' folder")
-                    .regex("^/.tox$")
+                ofDir("dir_python_dottox", "extra-icons/folder_tmp.svg", "Python: .tox folder")
                     .eq(".tox"),
-                ofDir("dir_teamcity", "extra-icons/folder_teamcity.svg", "TeamCity (regex): '^/\\.teamcity$' folder")
-                    .regex("^/\\.teamcity")
+                ofDir("dir_teamcity", "extra-icons/folder_teamcity.svg", "TeamCity: .teamcity folder")
                     .eq(".teamcity"),
-                ofDir("dir_vscode_settings", "extra-icons/folder_vscode.svg", "Visual Studio Code (regex): '^/\\.vscode$' folder")
-                    .regex("^/\\.vscode$")
+                ofDir("dir_vscode_settings", "extra-icons/folder_vscode.svg", "Visual Studio Code: .vscode folder")
                     .eq(".vscode"),
-                ofDir("dir_semaphoreci", "extra-icons/folder_semaphoreci.svg", "Semaphore (regex): '^/\\.semaphore' folder")
-                    .regex("^/\\.semaphore$")
+                ofDir("dir_semaphoreci", "extra-icons/folder_semaphoreci.svg", "Semaphore: .semaphore folder")
                     .eq(".semaphore"),
-                ofDir("dir_expo", "extra-icons/expo_folder.svg", "Expo (regex): '^/\\.expo$' folder")
-                    .regex("^/\\.expo$")
+                ofDir("dir_expo", "extra-icons/expo_folder.svg", "Expo: .expo folder")
                     .eq(".expo"),
-                ofDir("dir_storybook", "extra-icons/folder_storybook.svg", "Storybook (regex): '^/\\.storybook$' folder")
-                    .regex("^/\\.storybook$")
+                ofDir("dir_storybook", "extra-icons/folder_storybook.svg", "Storybook: .storybook folder")
                     .eq(".storybook")
                     .tags(ModelTag.STORYBOOK),
                 // - Flyway databases
@@ -231,9 +211,51 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 //
                 // programmable
                 //
+                // git
                 ofDir("gitsubmodule", "extra-icons/git_submodule.svg", "Git sub-module containing folder")
                     .iconEnabler(IconEnablerType.IS_GIT_SUBMODULE_FOLDER)
-                    .altIcons("extra-icons/git_submodule_alt.svg"),
+                    .altIcons("extra-icons/git_submodule_alt.svg")
+                    .tags(ModelTag.HELM),
+                // helm
+                ofDir("helm_dir", "extra-icons/helmDirectory.svg", "Helm chart containing folder")
+                    .iconEnabler(IconEnablerType.IS_HELM_FOLDER)
+                    .altIcons("extra-icons/helmlogo.svg")
+                    .tags(ModelTag.HELM),
+                ofFile("helm_chart_yaml", "extra-icons/helmChart.svg", "Helm: Chart.yaml")
+                    .eq("chart.yaml")
+                    .iconEnabler(IconEnablerType.IS_IN_HELM_FOLDER)
+                    .tags(ModelTag.HELM),
+                ofFile("helm_requirements_yaml", "extra-icons/helmRequirementsYaml.svg", "Helm: requirements.yaml")
+                    .eq("requirements.yaml")
+                    .iconEnabler(IconEnablerType.IS_IN_HELM_FOLDER)
+                    .tags(ModelTag.HELM),
+                ofFile("helm_values_yaml", "extra-icons/helmValues.svg", "Helm: values.yaml")
+                    .eq("values.yaml")
+                    .iconEnabler(IconEnablerType.IS_IN_HELM_FOLDER)
+                    .tags(ModelTag.HELM),
+                ofDir("helm_charts_dir", "extra-icons/helmChartsDirectory.svg", "Helm: charts folder")
+                    .eq("charts")
+                    .iconEnabler(IconEnablerType.IS_IN_HELM_FOLDER)
+                    .tags(ModelTag.HELM),
+                ofDir("helm_templates_dir", "extra-icons/helmTemplatesDirectory.svg", "Helm: templates folder")
+                    .eq("templates")
+                    .iconEnabler(IconEnablerType.IS_IN_HELM_FOLDER)
+                    .tags(ModelTag.HELM),
+                ofFile("helm_helpers.tpl", "extra-icons/helmUndeployable.svg", "Helm: templates/_helpers.tpl")
+                    .eq("_helpers.tpl")
+                    .parents("templates")
+                    .iconEnabler(IconEnablerType.IS_IN_HELM_FOLDER)
+                    .tags(ModelTag.HELM),
+                ofFile("helm_notes_txt", "extra-icons/helmNotes.svg", "Helm: templates/NOTES.txt")
+                    .eq("notes.txt")
+                    .parents("templates")
+                    .iconEnabler(IconEnablerType.IS_IN_HELM_FOLDER)
+                    .tags(ModelTag.HELM),
+                ofFile("helm_all_yaml", "extra-icons/helm.svg", "Helm: *.yaml")
+                    .end(".yaml")
+                    .iconEnabler(IconEnablerType.IS_IN_HELM_FOLDER)
+                    .altIcons("extra-icons/helmlogo.svg")
+                    .tags(ModelTag.HELM),
 
                 // angular
                 ofFile("angular_json", "extra-icons/angular2.svg", "Angular: angular.json")
@@ -340,6 +362,8 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 ofFile("babel", "extra-icons/babel.svg", "Babel: babel.config.[json|js|cjs|mjs]|.babelrc.[json|js|cjs|mjs]|.babelrc")
                     .regex(".*/babel\\.config\\.(?:js(?:on)?|[cm]js)|\\.babelrc(?:\\.(?:js(?:on)?|[cm]js))?")
                     .altIcons("extra-icons/babel_alt.svg"),
+                ofFile("cookie", "extra-icons/cookie.svg", "Cookie (regex): .*cookie[a-zA-Z\\d_-]*\\.txt")
+                    .regex(".*cookie[a-zA-Z\\d_-]*\\.txt"),
                 ofFile("dotenv", "extra-icons/env.svg", "Dotenv: .*\\.env(\\.[a-zA-Z0-9]+)*")
                     .regex(".*\\.env(\\.[a-zA-Z\\d]+)*")
                     .altIcons("extra-icons/env_alt.svg", "extra-icons/env_alt2.svg"),
@@ -575,7 +599,8 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 ofFile("git", "extra-icons/git.svg", "Git: .gitattributes, .gitignore, .gitmodules, .gitreview")
                     .eq(".gitattributes", ".gitignore", ".gitmodules", ".gitreview"),
                 ofFile("gitlab", "extra-icons/gitlab.svg", "Gitlab: .gitlab-ci.yml")
-                    .eq(".gitlab-ci.yml"),
+                    .eq(".gitlab-ci.yml")
+                    .altIcons("extra-icons/gitlab_alt.svg"),
                 ofFile("grafana", "extra-icons/grafana.svg", "Grafana: grafana.ini")
                     .eq("grafana.ini"),
                 ofFile("graphqlconfig", "extra-icons/graphql_config.svg", "GraphQL: graphql.config.json")

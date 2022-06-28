@@ -1,8 +1,22 @@
 # Extra Icons Change Log
 
-## 2022.1.5 (planned for 2022/07/02)
+## 2022.1.7 (WIP)
+* implement #100: add buttons to allow reordering of entries in the User Icons list.
+
+## 2022.1.6 (2022/06/25)
+* improve accuracy and performance of Angular support.
+* support various Helm files and folders.
+* support Cookie text files.
+* support `node_modules` folders.
+* add an alternative YAML icon.
+* the icons list in the configuration panel now indicates if you need to restart the IDE to see changes.
+* some code cleanup.
+
+## 2022.1.5 (2022/06/14)
+* fix #99: Angular support (when it looks for `angular.json` files) may freeze the IDE on some specific projects.
 * prevent a possible crash with the new IntelliJ UI (currently in preview) for IntelliJ 2022.2+ EAP (222.2889.14+).
 * rework Gradle icons.
+* add an alternative Gitlab icon (the latest version from the Gitlab website).
 
 ## 2022.1.4 (2022/06/04)
 * support cache2k xml config files.

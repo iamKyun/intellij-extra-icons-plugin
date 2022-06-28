@@ -26,10 +26,26 @@
     -->
 
     <change-notes><![CDATA[
-    2022.1.5 (2022/07/02)
+    2022.1.7 (WIP)
     <ul>
+      <li>implement #100: add buttons to allow reordering of entries in the User Icons list.</li>
+    </ul>
+    2022.1.6 (2022/06/25)
+    <ul>
+      <li>improve accuracy and performance of Angular support.</li>
+      <li>support various Helm files and folders.</li>
+      <li>support Cookie text files.</li>
+      <li>support <i>node_modules</i> folders.</li>
+      <li>add an alternative YAML icon.</li>
+      <li>the icons list in the configuration panel now indicates if you need to restart the IDE to see changes.</li>
+      <li>some code cleanup.</li>
+    </ul>
+    2022.1.5 (2022/06/14)
+    <ul>
+      <li>fix #99: Angular support (when it looks for <i>angular.json</i> files) may freeze the IDE on some specific projects.</li>
       <li>prevent a possible crash with the new IntelliJ UI (currently in preview) for IntelliJ 2022.2+ EAP (222.2889.14+).</li>
       <li>rework Gradle icons.</li>
+      <li>add an alternative Gitlab icon (the latest version from the Gitlab website).</li>
     </ul>
     2022.1.4 (2022/06/04)
     <ul>
@@ -107,17 +123,17 @@
         <!--suppress PluginXmlValidity (can't find third-party plugins, but it's OK) -->
         <fileIconProvider
             id="genericFileIconProvider"
-            order="first, before amailp.intellij.robot, before com.vladsch.idea.multimarkdown, before com.hiberbee.intellij.hiberbee-theme, before nb-mind-map-idea, before mdx.js"
+            order="first, before amailp.intellij.robot, before com.vladsch.idea.multimarkdown, before com.hiberbee.intellij.hiberbee-theme, before nb-mind-map-idea, before mdx.js, before com.intellij.kubernetes"
             implementation="lermitage.intellij.extra.icons.ExtraIconProvider"/>
         <!--suppress PluginXmlValidity (can't find third-party plugins, but it's OK) -->
         <iconProvider
             id="extraIconsIconProvider"
-            order="first, before amailp.intellij.robot, before com.vladsch.idea.multimarkdown, before com.hiberbee.intellij.hiberbee-theme, before nb-mind-map-idea, before mdx.js"
+            order="first, before amailp.intellij.robot, before com.vladsch.idea.multimarkdown, before com.hiberbee.intellij.hiberbee-theme, before nb-mind-map-idea, before mdx.js, before com.intellij.kubernetes"
             implementation="lermitage.intellij.extra.icons.ExtraIconProvider"/>
         <!--suppress PluginXmlValidity (can't find third-party plugins, but it's OK) -->
         <openapi.vcs.changes.ui.filePathIconProvider
             id="extraIconsFilePathIconProvider"
-            order="first, before amailp.intellij.robot, before com.vladsch.idea.multimarkdown, before com.hiberbee.intellij.hiberbee-theme, before nb-mind-map-idea, before mdx.js"
+            order="first, before amailp.intellij.robot, before com.vladsch.idea.multimarkdown, before com.hiberbee.intellij.hiberbee-theme, before nb-mind-map-idea, before mdx.js, before com.intellij.kubernetes"
             implementation="lermitage.intellij.extra.icons.ExtraIconProvider"/>
         <applicationService
             serviceImplementation="lermitage.intellij.extra.icons.cfg.services.impl.SettingsIDEService"/>
