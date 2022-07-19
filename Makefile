@@ -52,7 +52,7 @@ runold: intro ## run plugin in oldest supported IntelliJ Ultimate version
 
 .PHONY: build
 build: intro ## build and package plugin to build/distribution/ (see generated ZIP file)
-	${gradlew_cmd} clean buildPlugin test verifyPlugin --warning-mode all
+	${gradlew_cmd} clean buildPlugin test verifyPlugin --warning-mode all -PpluginVerifyProductDescriptor=true
 
 
 .PHONY: test
@@ -93,6 +93,11 @@ unlock: intro ## remove gradle dependency versions lock file
 .PHONY: lic
 lic: intro ## generate license report to build/reports/licenses/ (licenses used by dependencies)
 	${gradlew_cmd} licenseReport
+
+
+.PHONY: dt
+dt: intro ## show dependencies graph
+	${gradlew_cmd} dependencies
 
 
 .PHONY: help

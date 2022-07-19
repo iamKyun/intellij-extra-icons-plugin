@@ -1,17 +1,17 @@
-import java.io.StringWriter
 import com.adarshr.gradle.testlogger.theme.ThemeType
 import com.github.benmanes.gradle.versions.reporter.PlainTextReporter
 import com.github.benmanes.gradle.versions.reporter.result.Result
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.palantir.gradle.gitversion.VersionDetails
 import groovy.lang.Closure
+import java.io.StringWriter
 
 fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
     id("java")
     id("jacoco")
-    id("org.jetbrains.intellij") version "1.6.0" // https://github.com/JetBrains/gradle-intellij-plugin and https://lp.jetbrains.com/gradle-intellij-plugin/
+    id("org.jetbrains.intellij") version "1.7.0" // https://github.com/JetBrains/gradle-intellij-plugin https://lp.jetbrains.com/gradle-intellij-plugin/
     id("com.github.ben-manes.versions") version "0.42.0" // https://github.com/ben-manes/gradle-versions-plugin
     id("com.adarshr.test-logger") version "3.2.0" // https://github.com/radarsh/gradle-test-logger-plugin
     id("com.jaredsburrows.license") version "0.9.0" // https://github.com/jaredsburrows/gradle-license-plugin
@@ -26,6 +26,7 @@ val pluginDownloadIdeaSources: String by project
 val pluginInstrumentPluginCode: String by project
 val pluginVersion: String by project
 val pluginJavaVersion: String by project
+val pluginVerifyProductDescriptor: String by project
 
 version = if (pluginVersion == "auto") {
     val versionDetails: Closure<VersionDetails> by extra
@@ -39,10 +40,15 @@ version = if (pluginVersion == "auto") {
     pluginVersion
 }
 
-val inCI = System.getenv("CI") != null
-
 val twelvemonkeysVersion = "3.8.2"
 val junitVersion = "5.8.2"
+
+if (pluginVerifyProductDescriptor.toBoolean()) {
+    val pluginXmlStr = projectDir.resolve("src/main/resources/META-INF/plugin.xml").readText()
+    if (!pluginXmlStr.contains("<product-descriptor")) {
+        throw GradleException("plugin.xml: Product Descriptor is missing")
+    }
+}
 
 logger.quiet("Will use IDEA $pluginIdeaVersion and Java $pluginJavaVersion. Plugin version set to $version.")
 
@@ -60,10 +66,14 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+
+    // TODO check JUnit and Gradle updates and remove this workaround asap
+    // gradle 7.5 + JUnit workaround for NoClassDefFoundError: org/junit/platform/launcher/LauncherSessionListener
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.8.2")
 }
 
 intellij {
-    downloadSources.set(pluginDownloadIdeaSources.toBoolean() && !inCI)
+    downloadSources.set(pluginDownloadIdeaSources.toBoolean() && !System.getenv().containsKey("CI"))
     instrumentCode.set(pluginInstrumentPluginCode.toBoolean())
     pluginName.set("Extra Icons")
     plugins.set(listOf("AngularJS"))
@@ -82,9 +92,16 @@ tasks {
         sourceCompatibility = pluginJavaVersion
         targetCompatibility = pluginJavaVersion
         options.compilerArgs = listOf("-Xlint:deprecation")
+        options.encoding = "UTF-8"
     }
     withType<Test> {
         useJUnitPlatform()
+
+        // TODO check JUnit and Gradle updates and remove this workaround asap
+        // gradle 7.5 + JUnit workaround https://docs.gradle.org/7.5/userguide/upgrading_version_7.html#removes_implicit_add_opens_for_test_workers
+        jvmArgs("--add-opens=java.base/java.io=ALL-UNNAMED")
+        jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED")
+        jvmArgs("--add-opens=java.base/java.util=ALL-UNNAMED")
     }
     jacocoTestReport {
         reports {

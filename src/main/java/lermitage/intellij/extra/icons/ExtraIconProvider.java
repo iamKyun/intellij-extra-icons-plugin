@@ -146,6 +146,9 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                     .eq(".storybook")
                     .tags(ModelTag.STORYBOOK),
                 // - Flyway databases
+                ofDir("dir_flyway", "extra-icons/folder_flyway.svg", "Flyway (regex): '.*/db/migration/?'")
+                    .regex(".*/db/migration/?")
+                    .tags(ModelTag.FLYWAY),
                 ofDir("dir_flyway_db2", "extra-icons/folder_db2.svg", "Flyway, IBM DB2 database folder (regex): '.*/db/migration/db2[a-zA-Z0-9._\\-]*'")
                     .regex(".*/db/migration/db2[a-zA-Z\\d._\\-]*")
                     .tags(ModelTag.FLYWAY),
@@ -177,6 +180,9 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                     .regex(".*/db/migration/mssql[a-zA-Z\\d._\\-]*")
                     .tags(ModelTag.FLYWAY),
                 // - Liquibase databases
+                ofDir("dir_liquibase", "extra-icons/folder_liquibase.svg", "Liquibase (regex): '.*/db/changelog/?'")
+                    .regex(".*/db/changelog/?")
+                    .tags(ModelTag.LIQUIBASE),
                 ofDir("dir_liquibase_db2", "extra-icons/folder_db2.svg", "Liquibase, IBM DB2 database folder (regex): '.*/db/changelog/db2[a-zA-Z0-9._\\-]*'")
                     .regex(".*/db/changelog/db2[a-zA-Z\\d._\\-]*")
                     .tags(ModelTag.LIQUIBASE),
@@ -214,8 +220,7 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 // git
                 ofDir("gitsubmodule", "extra-icons/git_submodule.svg", "Git sub-module containing folder")
                     .iconEnabler(IconEnablerType.IS_GIT_SUBMODULE_FOLDER)
-                    .altIcons("extra-icons/git_submodule_alt.svg")
-                    .tags(ModelTag.HELM),
+                    .altIcons("extra-icons/git_submodule_alt.svg"),
                 // helm
                 ofDir("helm_dir", "extra-icons/helmDirectory.svg", "Helm chart containing folder")
                     .iconEnabler(IconEnablerType.IS_HELM_FOLDER)
@@ -393,12 +398,14 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 ofFile("test-javascript", "extra-icons/test-javascript.svg", "TestJavascript: .*\\.?(test|spec)\\.js$")
                     .regex(".*\\.?(test|spec)\\.js$")
                     .altIcons("extra-icons/test-javascript_alt.svg"),
-                ofFile("flyway", "extra-icons/flyway.png", "Flyway (regex): '.*/db/migration/.*\\.sql'")
+                ofFile("flyway", "extra-icons/flyway.svg", "Flyway (regex): '.*/db/migration/.*\\.sql'")
                     .regex(".*/db/migration/.*\\.sql")
-                    .tags(ModelTag.FLYWAY),
+                    .tags(ModelTag.FLYWAY)
+                    .altIcons("extra-icons/flyway_alt.svg", "extra-icons/flyway_alt2.png"),
                 ofFile("liquibase", "extra-icons/liquibase.svg", "Liquibase (regex): '.*/db/changelog/.*\\.(sql|xml)'")
                     .regex(".*/db/changelog/.*\\.(sql|xml)")
-                    .tags(ModelTag.LIQUIBASE),
+                    .tags(ModelTag.LIQUIBASE)
+                    .altIcons("extra-icons/liquibase_alt.svg"),
                 ofFile("mockk", "extra-icons/mockk.svg", "Mockk: io/mockk/settings.properties")
                     .regex(".*/io/mockk/settings\\.properties"),
                 ofFile("storybook", "extra-icons/storybook.svg", "Storybook: *.stor(y|ies).(js|jsx|ts|tsx|mdx)")
@@ -532,6 +539,8 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                     .eq(".coveragerc"),
                 ofFile("crowdin", "extra-icons/crowdin.svg", "Crowdin: .crowdin.yml")
                     .eq(".crowdin.yml"),
+                ofFile("deno", "extra-icons/deno.svg", "Deno: deno.json, deno.jsonc")
+                    .eq("deno.json", "deno.jsonc"),
                 ofFile("deptective", "extra-icons/deptective.png", "Deptective: deptective.json")
                     .eq("deptective.json"),
                 ofFile("docker", "extra-icons/docker.svg", "Docker: dockerfile(.xml,.yml,...)")
@@ -708,6 +717,9 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                     .eq("notice").mayEnd(TXT),
                 ofFile("nox", "extra-icons/nox.png", "Nox: noxfile.py")
                     .eq("noxfile.py"),
+                ofFile("nx", "extra-icons/nx.svg", "Nx: nx.json")
+                    .eq("nx.json")
+                    .altIcons("extra-icons/nx_alt.svg"),
                 ofFile("openissues", "extra-icons/bug.svg", "Open issues: open_issues(.md,.txt,.adoc,.rst)")
                     .start("open_issues").mayEnd(TXT),
                 ofFile("packageinfojava", "extra-icons/packageinfojava.svg", "Java package info: package-info.java")
@@ -842,8 +854,10 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 //
                 // extension only
                 //
-                ofFile("ext_archive", "extra-icons/archive.svg", "Archive: *.zip, *.7z, *.tar, *.gz, *.bz2, *.xz")
-                    .end(".zip", ".7z", ".tar", ".gz", ".bz2", ".xz"),
+                ofFile("ext_aac", "extra-icons/aac.svg", "Advanced Audio Coding: *.aac")
+                    .end(".aac"),
+                ofFile("ext_archive", "extra-icons/archive.svg", "Archive: *.zip, *.7z, *.tar, *.gz, *.bz2, *.xz, *.tgz")
+                    .end(".zip", ".7z", ".tar", ".gz", ".bz2", ".xz", ".tgz"),
                 ofFile("ext_adoc", "extra-icons/asciidoc.svg", "Asciidoc: *.adoc, *.asciidoc")
                     .end(".adoc", ".asciidoc")
                     .altIcons("extra-icons/asciidoc_alt.png"),
@@ -983,8 +997,12 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                         "extra-icons/video_alt3.svg"),
                 ofFile("ext_velocity", "extra-icons/velocity.svg", "Velocity: *.vtl")
                     .end(".vtl"),
+                ofFile("ext_vscode-workspace", "extra-icons/vscode.svg", "Visual Studio Code: : *.code-workspace")
+                    .end(".code-workspace"),
                 ofFile("ext_war", "extra-icons/tomcat.svg", "Java WAR: *.war")
                     .end(".war"),
+                ofFile("ext_xiph", "extra-icons/xiph.svg", "Xiph audio: *.flac, *.oga, *.ogg, *.opus, *.spx")
+                    .end(".flac", ".oga", ".ogg", ".opus", ".spx"),
 
                 ofFile("ext_libreoffice_calc", "extra-icons/officedocs/localc.png", "LibreOffice Calc: *.ods")
                     .end(".ods")
