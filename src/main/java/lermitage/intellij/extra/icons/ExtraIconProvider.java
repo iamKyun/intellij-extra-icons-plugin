@@ -368,12 +368,14 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                     .regex(".*/babel\\.config\\.(?:js(?:on)?|[cm]js)|\\.babelrc(?:\\.(?:js(?:on)?|[cm]js))?")
                     .altIcons("extra-icons/babel_alt.svg"),
                 ofFile("cookie", "extra-icons/cookie.svg", "Cookie (regex): .*cookie[a-zA-Z\\d_-]*\\.txt")
-                    .regex(".*cookie[a-zA-Z\\d_-]*\\.txt"),
+                    .regex(".*cookie[a-zA-Z\\d._\\-]*\\.txt$"),
                 ofFile("dotenv", "extra-icons/env.svg", "Dotenv: .*\\.env(\\.[a-zA-Z0-9]+)*")
-                    .regex(".*\\.env(\\.[a-zA-Z\\d]+)*")
+                    .regex(".*\\.env[a-zA-Z\\d._\\-]*$")
                     .altIcons("extra-icons/env_alt.svg", "extra-icons/env_alt2.svg"),
                 ofFile("eslint", "extra-icons/eslint.svg", "Eslint (regex): .*\\.eslintrc(\\.[cm]?js(on)?|\\.y(a)?ml)?$")
                     .regex(".*\\.eslintrc(\\.[cm]?js(on)?|\\.y(a)?ml)?$"),
+                ofFile("githubactions", "extra-icons/github_action.svg", "GitHub Actions: .github/workflows/.*\\.yml")
+                    .regex(".*/\\.github/workflows/.*\\.yml"),
                 ofFile("nodemon", "extra-icons/nodemon.svg", "Nodemon: ^\\.?nodemon\\.json$")
                     .regex(".^\\.?nodemon\\.json$"),
                 ofFile("tsconfig", "extra-icons/tsconfig.svg", "TSConfig: .*/\\.?tsconfig.*\\.(js|json)$")
@@ -620,6 +622,9 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                     .eq("graphql.schema.json"),
                 ofFile("gocd", "extra-icons/gocd.png", "Gocd: .gocd(.xml,.yml,...)")
                     .eq(".gocd").mayEnd(CFG),
+                ofFile("gomod", "extra-icons/gomod.svg", "Go: go.mod")
+                    .eq("go.mod")
+                    .altIcons("extra-icons/gomod_alt.svg"),
                 ofFile("hadolint", "extra-icons/hadolint.png", "Hadolint: .hadolint.yaml, .hadolint.yml")
                     .eq(".hadolint").end(YML),
                 ofFile("hibernate", "extra-icons/hibernate.svg", "Hibernate: hibernate.properties")
@@ -878,6 +883,8 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                     .end(".apk", ".xapk"),
                 ofFile("ext_apple-audio", "extra-icons/apple.svg", "Apple Audio: *.aiff, *.aifc, *.caf")
                     .end(".aiff", ".aifc", ".caf"),
+                ofFile("ext_apple-video", "extra-icons/apple.svg", "Apple Video: *.mov, *.qt")
+                    .end(".mov", ".qt"),
                 ofFile("ext_avro_avsc", "extra-icons/avro.svg", "Avro: *.avsc")
                     .end(".avsc"),
                 ofFile("ext_bin", "extra-icons/binary.svg", "Binary: *.bin")
@@ -912,9 +919,9 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                     .end(".form"),
                 ofFile("ext_graphqls", "extra-icons/graphql.svg", "GraphQL: *.graphqls")
                     .end(".graphqls"),
-                ofFile("ext_haxe", "extra-icons/haxe.png", "Haxe: *.hx")
+                ofFile("ext_haxe", "extra-icons/haxe.svg", "Haxe: *.hx")
                     .end(".hx"),
-                ofFile("ext_haxexml", "extra-icons/haxehxml.png", "Haxe: *.hxml")
+                ofFile("ext_haxexml", "extra-icons/haxehxml.svg", "Haxe: *.hxml")
                     .end(".hxml"),
                 ofFile("ext_http", "extra-icons/http.png", "HTTP (e.g. IntelliJ HTTP Client queries file): *.http")
                     .end(".http"),
@@ -960,6 +967,8 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                     .altIcons("extra-icons/mdx_alt.svg", "extra-icons/mdx_alt2.svg"),
                 ofFile("ext_mmd", "extra-icons/mindmap.svg", "IDEA MindMap plugin: *.mmd")
                     .end(".mmd"),
+                ofFile("ext_mpeg", "extra-icons/mpeg.svg", "MPEG-1/2 Audio: *.mp3, *.mp1, *.m1a, *.mp2, *.m2a, *.mpa")
+                    .end(".mp3", ".mp1", ".m1a", ".mp2", ".m2a", ".mpa"),
                 ofFile("ext_mwb", "extra-icons/mysqlworkbench.png", "MySQL Workbench: *.mwb")
                     .end(".mwb"),
                 ofFile("ext_nsi", "extra-icons/nsis.svg", "NSIS Nullsoft Scriptable Install System: *.nsi")
@@ -1008,8 +1017,8 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 ofFile("typescript-react", "extra-icons/tsx.svg", "TSX (Typescript + React): *.tsx")
                     .end(".tsx"),
                 ofFile("ext_video", "extra-icons/video.svg", "Video: *.3gp, *.avi, *.flv, *.mkv, *.mp4, *.mpeg, *.ogm, *.webm, ...")
-                    .end(".3g2", ".3gp", ".avi", ".divx", ".f4a", ".f4b", ".f4p", ".f4v", ".flv", ".m4p",
-                        ".m4v", ".mp4", ".mpg", ".mpeg", ".mov", ".ogm", ".ogv", ".vob", ".webm", ".wmv", ".xvid")
+                    .end(".3g2", ".3gp", ".avi", ".divx", ".f4a", ".f4b", ".f4p", ".f4v", ".flv", ".m2t", ".m4p",
+                        ".m4v", ".mp4", ".mpg", ".mpeg", ".ogm", ".ogv", ".ts", ".tsa", ".tsv", ".vob", ".webm", ".wmv", ".xvid")
                     .altIcons("extra-icons/video_alt.svg", "extra-icons/video_alt2.svg",
                         "extra-icons/video_alt3.svg"),
                 ofFile("ext_velocity", "extra-icons/velocity.svg", "Velocity: *.vtl")

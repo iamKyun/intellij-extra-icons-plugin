@@ -4,14 +4,16 @@ import com.github.benmanes.gradle.versions.reporter.result.Result
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.palantir.gradle.gitversion.VersionDetails
 import groovy.lang.Closure
+import org.jetbrains.intellij.tasks.RunPluginVerifierTask
 import java.io.StringWriter
+import java.util.EnumSet
 
 fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
     id("java")
     id("jacoco")
-    id("org.jetbrains.intellij") version "1.8.0" // https://github.com/JetBrains/gradle-intellij-plugin https://lp.jetbrains.com/gradle-intellij-plugin/
+    id("org.jetbrains.intellij") version "1.8.1" // https://github.com/JetBrains/gradle-intellij-plugin https://lp.jetbrains.com/gradle-intellij-plugin/
     id("com.github.ben-manes.versions") version "0.42.0" // https://github.com/ben-manes/gradle-versions-plugin
     id("com.adarshr.test-logger") version "3.2.0" // https://github.com/radarsh/gradle-test-logger-plugin
     id("com.jaredsburrows.license") version "0.9.0" // https://github.com/jaredsburrows/gradle-license-plugin
@@ -23,7 +25,6 @@ plugins {
 // Import variables from gradle.properties file
 val pluginIdeaVersion: String by project
 val pluginDownloadIdeaSources: String by project
-val pluginInstrumentPluginCode: String by project
 val pluginVersion: String by project
 val pluginJavaVersion: String by project
 val pluginVerifyProductDescriptor: String by project
@@ -40,9 +41,6 @@ version = if (pluginVersion == "auto") {
     pluginVersion
 }
 
-val twelvemonkeysVersion = "3.8.2"
-val junitVersion = "5.9.0"
-
 if (pluginVerifyProductDescriptor.toBoolean()) {
     val pluginXmlStr = projectDir.resolve("src/main/resources/META-INF/plugin.xml").readText()
     if (!pluginXmlStr.contains("<product-descriptor")) {
@@ -58,7 +56,12 @@ repositories {
     mavenCentral()
 }
 
+val failsafe = "3.2.4"
+val twelvemonkeysVersion = "3.8.3"
+val junitVersion = "5.9.0"
+
 dependencies {
+    implementation("dev.failsafe:failsafe:$failsafe") // Retry support https://failsafe.dev/retry/
     implementation("com.twelvemonkeys.imageio:imageio-core:$twelvemonkeysVersion") // https://github.com/haraldk/TwelveMonkeys/releases
     // TODO Apache Batik is bundled with IJ and IJ-based IDEs (tested with PyCharm Community). If needed, see how to
     //  integrate org.apache.xmlgraphics:batik-all:1.14 without failing to load org.apache.batik.anim.dom.SAXSVGDocumentFactory
@@ -74,7 +77,7 @@ dependencies {
 
 intellij {
     downloadSources.set(pluginDownloadIdeaSources.toBoolean() && !System.getenv().containsKey("CI"))
-    instrumentCode.set(pluginInstrumentPluginCode.toBoolean())
+    instrumentCode.set(true)
     pluginName.set("Extra Icons")
     plugins.set(listOf("AngularJS"))
     sandboxDir.set("${rootProject.projectDir}/.idea-sandbox/${shortenIdeVersion(pluginIdeaVersion)}")
@@ -141,10 +144,26 @@ tasks {
     runIde {
         jvmArgs("-Xms128m")
         jvmArgs("-Xmx1024m")
-        autoReloadPlugins.set(true)
+        autoReloadPlugins.set(false)
+        // If any warning or error with missing --add-opens, wait for the next gradle-intellij-plugin's update that should sync
+        // with https://raw.githubusercontent.com/JetBrains/intellij-community/master/plugins/devkit/devkit-core/src/run/OpenedPackages.txt
+        // or do it manually
     }
     runPluginVerifier {
+        // https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html#runpluginverifier-task
         ideVersions.set(properties("pluginVerifierIdeVersions").split(',').map(String::trim).filter(String::isNotEmpty))
+        failureLevel.set(
+            EnumSet.complementOf(
+                EnumSet.of(
+                    // TODO enable COMPATIBILITY_PROBLEMS when this issue is fixed: https://youtrack.jetbrains.com/issue/MP-4724/intellij-plugin-verifier-Plugin-AngularJS-doesnt-have-a-build-compatible-with-IC-222373954-in-Marketplace
+                    //RunPluginVerifierTask.FailureLevel.COMPATIBILITY_PROBLEMS,
+                    RunPluginVerifierTask.FailureLevel.OVERRIDE_ONLY_API_USAGES,
+                    RunPluginVerifierTask.FailureLevel.NON_EXTENDABLE_API_USAGES,
+                    RunPluginVerifierTask.FailureLevel.PLUGIN_STRUCTURE_WARNINGS,
+                    RunPluginVerifierTask.FailureLevel.INVALID_PLUGIN
+                )
+            )
+        )
     }
     buildSearchableOptions {
         enabled = false

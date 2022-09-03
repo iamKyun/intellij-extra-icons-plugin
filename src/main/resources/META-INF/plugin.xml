@@ -1,4 +1,4 @@
-<idea-plugin require-restart="false">
+<idea-plugin require-restart="true">
     <id>lermitage.intellij.extra.icons</id>
     <name>Extra Icons</name>
     <version>REPLACED_BY_GRADLE</version>
@@ -16,6 +16,7 @@
         <li>For more information, please see this <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin/blob/master/docs/GET_STARTED.md">guide</a>.</li>
         <li>For questions about the plugin licensing model, how to get a license for free (students, teachers and OSS developers), and how to get a perpetual license, please see the <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin/blob/master/docs/LICENSE_FAQ.md">license FAQ</a>.</li>
       </ul>
+      <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin">GitHub</a> | <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin/issues">Issues</a> | <a href="https://www.linkedin.com/in/jonathan-lermitage/">LinkedIn</a> | <a href="https://vshymanskyy.github.io/StandWithUkraine/">💙 Help Ukraine 💛</a>
     ]]>
     </description>
 
@@ -26,6 +27,21 @@
     -->
 
     <change-notes><![CDATA[
+    2022.1.10 (WIP)
+    <ul>
+      <li>add an option in Extra Icons settings in order to force icons reloading on demand. Use it if you still see errors when querying IDE filename index: wait until indexing is done, go to File, Settings, Appearance &amp; Behavior, Extra Icons, then hit the <i>Reload projects icons</i> button. Again, feel free to upvote <a href="https://youtrack.jetbrains.com/issue/IDEA-289822">IDEA-289822</a>, it would help.</li>
+    </ul>
+    2022.1.9 (2022/08/27)
+    <ul>
+      <li>support many audio/video files. Thx to contributor <b>Serial-ATA</b>.</li>
+      <li>try to mitigate errors when querying IDE filename index (will now retry twice before failing). This is a JetBrains issue, <b>feel free to upvote <a href="https://youtrack.jetbrains.com/issue/IDEA-289822">IDEA-289822</a></b>, it would help.</li>
+      <li>internal: upgrade TwelveMonkeys library to 3.8.3 (used to preview PNG icons).</li>
+      <li>rework Haxe icons (PNG icon to SVG).</li>
+      <li>improve Dotenv and Cookie file support.</li>
+      <li>support <i>go.mod</i> files (I am proud of this icon 😁).</li>
+      <li>support GitHub Actions YML files.</li>
+      <li>disable plugin's dynamic reloading since it never worked. Plugin uses an IconPathPatcher implementation in order to override IDE icons, which prevents dynamic reloading.</li>
+    </ul>
     2022.1.8 (2022/08/06)
     <ul>
       <li>support Nx <i>nx.json</i> files.</li>
