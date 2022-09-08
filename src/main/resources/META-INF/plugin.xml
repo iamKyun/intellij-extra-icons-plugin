@@ -9,13 +9,18 @@
 
     <description><![CDATA[
       <ul>
-        <li>Adds 400+ icons for files like Travis YML, GitLab YML, Angular files, etc.</li>
+        <li>Adds 500+ icons for files like Travis YML, GitLab YML, Angular files, etc.</li>
         <li>Shows an icon for Git sub-module folders.</li>
         <li>Configurable: see <i>File &gt; Settings &gt; Appearance &amp; Behavior &gt; Extra Icons</i> to select extra icons to (de)activate. This is configurable at IDE and project level.</li>
         <li>You can also register your own icons in order to override file icons and all <a href="https://jetbrains.design/intellij/resources/icons_list/">IDE icons</a> (including toolbars, menus, etc.).</li>
         <li>For more information, please see this <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin/blob/master/docs/GET_STARTED.md">guide</a>.</li>
         <li>For questions about the plugin licensing model, how to get a license for free (students, teachers and OSS developers), and how to get a perpetual license, please see the <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin/blob/master/docs/LICENSE_FAQ.md">license FAQ</a>.</li>
       </ul>
+      📢 Please don't trust the plugin's low rating. It had ~5 stars until I decided to ask for modest financial support starting from March 2022.
+      Some narrow-minded people organized a review-bombing against my plugin (and sent me very aggressive emails, sometimes death threats;
+      seriously... they're crazy), which is why you see many 1-star ratings. JetBrains support accepted to remove most of the toxic reviews,
+      but unfortunately, they refused to remove the 1-star ratings...<br>
+      <br>
       <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin">GitHub</a> | <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin/issues">Issues</a> | <a href="https://www.linkedin.com/in/jonathan-lermitage/">LinkedIn</a> | <a href="https://vshymanskyy.github.io/StandWithUkraine/">💙 Help Ukraine 💛</a>
     ]]>
     </description>
@@ -27,9 +32,16 @@
     -->
 
     <change-notes><![CDATA[
-    2022.1.10 (WIP)
+    2022.1.10 (2022/09/05)
     <ul>
       <li>add an option in Extra Icons settings in order to force icons reloading on demand. Use it if you still see errors when querying IDE filename index: wait until indexing is done, go to File, Settings, Appearance &amp; Behavior, Extra Icons, then hit the <i>Reload projects icons</i> button. Again, feel free to upvote <a href="https://youtrack.jetbrains.com/issue/IDEA-289822">IDEA-289822</a>, it would help.</li>
+      <li>add an alternative Dependabot icon.</li>
+      <li>add an alternative Draw.io icon.</li>
+      <li>add an alternative Helm icon.</li>
+      <li>add an alternative HTTP icon.</li>
+      <li>support <a href="https://network.developer.nokia.com/sr/learn/yang/understanding-yang/">YANG</a> files.</li>
+      <li>rework some Docker icons, and fix a Docker Ignore dark icon.</li>
+      <li>improve icons reloading on config change.</li>
     </ul>
     2022.1.9 (2022/08/27)
     <ul>
@@ -99,17 +111,17 @@
         <!--suppress PluginXmlValidity (can't find third-party plugins, but it's OK) -->
         <fileIconProvider
             id="genericFileIconProvider"
-            order="first, before amailp.intellij.robot, before com.vladsch.idea.multimarkdown, before com.hiberbee.intellij.hiberbee-theme, before nb-mind-map-idea, before mdx.js, before com.intellij.kubernetes"
+            order="first, before amailp.intellij.robot, before com.vladsch.idea.multimarkdown, before com.hiberbee.intellij.hiberbee-theme, before nb-mind-map-idea, before mdx.js, before com.intellij.kubernetes, before tech.pantheon.yanginator"
             implementation="lermitage.intellij.extra.icons.ExtraIconProvider"/>
         <!--suppress PluginXmlValidity (can't find third-party plugins, but it's OK) -->
         <iconProvider
             id="extraIconsIconProvider"
-            order="first, before amailp.intellij.robot, before com.vladsch.idea.multimarkdown, before com.hiberbee.intellij.hiberbee-theme, before nb-mind-map-idea, before mdx.js, before com.intellij.kubernetes"
+            order="first, before amailp.intellij.robot, before com.vladsch.idea.multimarkdown, before com.hiberbee.intellij.hiberbee-theme, before nb-mind-map-idea, before mdx.js, before com.intellij.kubernetes, before tech.pantheon.yanginator"
             implementation="lermitage.intellij.extra.icons.ExtraIconProvider"/>
         <!--suppress PluginXmlValidity (can't find third-party plugins, but it's OK) -->
         <openapi.vcs.changes.ui.filePathIconProvider
             id="extraIconsFilePathIconProvider"
-            order="first, before amailp.intellij.robot, before com.vladsch.idea.multimarkdown, before com.hiberbee.intellij.hiberbee-theme, before nb-mind-map-idea, before mdx.js, before com.intellij.kubernetes"
+            order="first, before amailp.intellij.robot, before com.vladsch.idea.multimarkdown, before com.hiberbee.intellij.hiberbee-theme, before nb-mind-map-idea, before mdx.js, before com.intellij.kubernetes, before tech.pantheon.yanginator"
             implementation="lermitage.intellij.extra.icons.ExtraIconProvider"/>
         <applicationService
             serviceImplementation="lermitage.intellij.extra.icons.cfg.services.impl.SettingsIDEService"/>

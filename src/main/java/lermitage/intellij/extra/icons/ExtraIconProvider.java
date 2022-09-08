@@ -34,13 +34,13 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 ofIcon("ide_docker",
                     "Docker.svg", "extra-icons/docker.svg",
                     "IDE icon: Docker")
-                    .altIcons("extra-icons/docker_alt.png", "extra-icons/docker_alt2.svg")
+                    .altIcons("extra-icons/docker_alt.svg", "extra-icons/docker_alt2.svg")
                     .tags(ModelTag.DOCKER),
                 // docker compose
                 ofIcon("ide_docker_compose",
                     "DockerCompose.svg", "extra-icons/dockercompose.svg",
                     "IDE icon: Docker Compose")
-                    .altIcons("extra-icons/dockercompose_alt.png", "extra-icons/dockercompose_alt2.svg")
+                    .altIcons("extra-icons/dockercompose_alt.svg", "extra-icons/dockercompose_alt2.svg")
                     .tags(ModelTag.DOCKER),
                 // html
                 ofIcon("ide_html",
@@ -90,7 +90,8 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 ofDir("dir_circleci", "extra-icons/folder_circleci.svg", "Circle CI: .circleci folder")
                     .eq(".circleci"),
                 ofDir("dir_dependabot", "extra-icons/folder_dependabot.svg", "Dependabot: .dependabot folder")
-                    .eq(".dependabot"),
+                    .eq(".dependabot")
+                    .altIcons("extra-icons/folder_dependabot_alt.svg"),
                 ofDir("dir_docker", "extra-icons/folder_docker.svg", "Docker: docker folder")
                     .eq("docker")
                     .tags(ModelTag.DOCKER),
@@ -224,7 +225,7 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 // helm
                 ofDir("helm_dir", "extra-icons/helmDirectory.svg", "Helm chart containing folder")
                     .iconEnabler(IconEnablerType.IS_HELM_FOLDER)
-                    .altIcons("extra-icons/helmlogo.svg")
+                    .altIcons("extra-icons/helmlogo.svg", "extra-icons/helmlogo_alt.svg")
                     .tags(ModelTag.HELM),
                 ofFile("helm_chart_yaml", "extra-icons/helmChart.svg", "Helm: Chart.yaml")
                     .eq("chart.yaml")
@@ -259,7 +260,7 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 ofFile("helm_all_yaml", "extra-icons/helm.svg", "Helm: *.yaml")
                     .end(".yaml")
                     .iconEnabler(IconEnablerType.IS_IN_HELM_FOLDER)
-                    .altIcons("extra-icons/helmlogo.svg")
+                    .altIcons("extra-icons/helmlogo.svg", "extra-icons/helmlogo_alt.svg")
                     .tags(ModelTag.HELM),
 
                 // angular
@@ -418,9 +419,11 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 // file plus its containing folder
                 //
                 ofFile("dependabot_config", "extra-icons/dependabot.svg", "Dependabot: .dependabot/config.yml")
-                    .eq("config.yml").parents(".dependabot"),
+                    .eq("config.yml").parents(".dependabot")
+                    .altIcons("extra-icons/dependabot_alt.svg"),
                 ofFile("dependabot", "extra-icons/dependabot.svg", "Dependabot: .github/dependabot.yml")
-                    .eq("dependabot").end(YML).parents(".github"),
+                    .eq("dependabot").end(YML).parents(".github")
+                    .altIcons("extra-icons/dependabot_alt.svg"),
                 ofFile("golwroot", "extra-icons/glowroot.png", "Glowroot: glowroot/admin.json and glowroot/config.json")
                     .eq("admin.json", "config.json").parents("glowroot"),
                 ofFile("jgitver", "extra-icons/jgitver.svg", "jgitver: .mvn/jgitver.config.xml")
@@ -549,23 +552,23 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                     .eq("deptective.json"),
                 ofFile("docker", "extra-icons/docker.svg", "Docker: dockerfile(.xml,.yml,...)")
                     .eq("dockerfile").mayEnd(CFG)
-                    .altIcons("extra-icons/docker_alt.png", "extra-icons/docker_alt2.svg")
+                    .altIcons("extra-icons/docker_alt.svg", "extra-icons/docker_alt2.svg")
                     .tags(ModelTag.DOCKER),
                 ofFile("dockercompose", "extra-icons/dockercompose.svg", "Docker: docker-compose")
                     .eq("docker-compose").mayEnd(CFG)
-                    .altIcons("extra-icons/dockercompose_alt.png", "extra-icons/dockercompose_alt2.svg")
+                    .altIcons("extra-icons/dockercompose_alt.svg", "extra-icons/dockercompose_alt2.svg")
                     .tags(ModelTag.DOCKER),
                 ofFile("docker1", "extra-icons/docker.svg", "Docker: start by 'dockerfile' and end by '.xml,.yml,...'")
                     .start("dockerfile").end(CFG)
-                    .altIcons("extra-icons/docker_alt.png", "extra-icons/docker_alt2.svg")
+                    .altIcons("extra-icons/docker_alt.svg", "extra-icons/docker_alt2.svg")
                     .tags(ModelTag.DOCKER),
                 ofFile("dockercompose1", "extra-icons/dockercompose.svg", "Docker: start by 'docker-compose' and end by '.xml,.yml,...'")
                     .start("docker-compose").end(CFG)
-                    .altIcons("extra-icons/dockercompose_alt.png", "extra-icons/dockercompose_alt2.svg")
+                    .altIcons("extra-icons/dockercompose_alt.svg", "extra-icons/dockercompose_alt2.svg")
                     .tags(ModelTag.DOCKER),
                 ofFile("dockerignore", "extra-icons/dockerignore.svg", "Docker: .dockerignore")
                     .eq(".dockerignore")
-                    .altIcons("extra-icons/dockerignore_alt.png", "extra-icons/dockerignore_alt2.svg")
+                    .altIcons("extra-icons/dockerignore_alt.svg", "extra-icons/dockerignore_alt2.svg")
                     .tags(ModelTag.DOCKER),
                 ofFile("editorconfig", "extra-icons/editorconfig.png", "EditorConfig: .editorconfig")
                     .eq(".editorconfig").mayEnd(CFG)
@@ -910,7 +913,7 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                     .altIcons("extra-icons/binary_alt.svg", "extra-icons/binary_alt2.svg"),
                 ofFile("ext_drawio", "extra-icons/drawio.svg", "Draw.io: *.drawio, *.dio")
                     .end(".drawio", ".dio")
-                    .altIcons("extra-icons/drawio_alt.png"),
+                    .altIcons("extra-icons/drawio_alt.svg", "extra-icons/drawio_alt2.png"),
                 ofFile("ext_epub", "extra-icons/epub.svg", "Epub: *.epub, *.mobi, *.azw, *.azw3")
                     .end(".epub", ".mobi", ".azw", ".azw3"),
                 ofFile("ext_exe", "extra-icons/msexe.png", "Windows executable: *.exe")
@@ -924,7 +927,8 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 ofFile("ext_haxexml", "extra-icons/haxehxml.svg", "Haxe: *.hxml")
                     .end(".hxml"),
                 ofFile("ext_http", "extra-icons/http.png", "HTTP (e.g. IntelliJ HTTP Client queries file): *.http")
-                    .end(".http"),
+                    .end(".http")
+                    .altIcons("extra-icons/http_alt.svg"),
                 ofFile("ext_iml", "extra-icons/jetbrains.svg", "IntelliJ project: *.iml")
                     .end(".iml"),
                 ofFile("ext_jfr", "extra-icons/jfr.svg", "JFR snapshot: *.jfr")
@@ -1032,6 +1036,8 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                     .altIcons("extra-icons/video_alt3.svg"),
                 ofFile("ext_xiph", "extra-icons/xiph.svg", "Xiph audio: *.flac, *.oga, *.ogg, *.opus, *.spx")
                     .end(".flac", ".oga", ".ogg", ".opus", ".spx"),
+                ofFile("ext_yang", "extra-icons/yang.svg", "YANG: *.yang")
+                    .end(".yang"),
 
                 ofFile("ext_libreoffice_calc", "extra-icons/officedocs/localc.png", "LibreOffice Calc: *.ods")
                     .end(".ods")
@@ -1078,11 +1084,11 @@ public class ExtraIconProvider extends BaseIconProvider implements DumbAware {
                 //
                 ofFile("docker_generic", "extra-icons/docker.svg", "Docker (generic): start by 'dockerfile'")
                     .start("dockerfile")
-                    .altIcons("extra-icons/docker_alt.png", "extra-icons/docker_alt2.svg")
+                    .altIcons("extra-icons/docker_alt.svg", "extra-icons/docker_alt2.svg")
                     .tags(ModelTag.DOCKER),
                 ofFile("docker_generic_2", "extra-icons/docker.svg", "Docker (generic): end with 'dockerfile'")
                     .end("dockerfile")
-                    .altIcons("extra-icons/docker_alt.png", "extra-icons/docker_alt2.svg")
+                    .altIcons("extra-icons/docker_alt.svg", "extra-icons/docker_alt2.svg")
                     .tags(ModelTag.DOCKER)
             )
             .flatMap(ExtraIconProvider::modelList)
