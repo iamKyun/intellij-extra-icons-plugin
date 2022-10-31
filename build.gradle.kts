@@ -4,6 +4,7 @@ import com.github.benmanes.gradle.versions.reporter.result.Result
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import com.palantir.gradle.gitversion.VersionDetails
 import groovy.lang.Closure
+import org.apache.commons.io.FileUtils
 import org.jetbrains.intellij.tasks.RunPluginVerifierTask
 import java.io.StringWriter
 import java.util.EnumSet
@@ -22,6 +23,9 @@ plugins {
     id("biz.lermitage.oga") version "1.1.1"
 }
 
+val pluginXmlFile = projectDir.resolve("src/main/resources/META-INF/plugin.xml")
+val pluginXmlFileBackup = projectDir.resolve("src/main/resources/META-INF/plugin.original.xml")
+
 // Import variables from gradle.properties file
 val pluginIdeaVersion: String by project
 val pluginDownloadIdeaSources: String by project
@@ -29,6 +33,7 @@ val pluginVersion: String by project
 val pluginJavaVersion: String by project
 val pluginVerifyProductDescriptor: String by project
 val testLoggerStyle: String by project
+val pluginNeedsLicense: String by project
 
 version = if (pluginVersion == "auto") {
     val versionDetails: Closure<VersionDetails> by extra
@@ -42,13 +47,6 @@ version = if (pluginVersion == "auto") {
     pluginVersion
 }
 
-if (pluginVerifyProductDescriptor.toBoolean()) {
-    val pluginXmlStr = projectDir.resolve("src/main/resources/META-INF/plugin.xml").readText()
-    if (!pluginXmlStr.contains("<product-descriptor")) {
-        throw GradleException("plugin.xml: Product Descriptor is missing")
-    }
-}
-
 logger.quiet("Will use IDEA $pluginIdeaVersion and Java $pluginJavaVersion. Plugin version set to $version.")
 
 group = "lermitage.intellij.extra.icons"
@@ -57,8 +55,8 @@ repositories {
     mavenCentral()
 }
 
-val twelvemonkeysVersion = "3.8.3"
-val junitVersion = "5.9.0"
+val twelvemonkeysVersion = "3.9.3"
+val junitVersion = "5.9.1"
 
 dependencies {
     implementation("com.twelvemonkeys.imageio:imageio-core:$twelvemonkeysVersion") // https://github.com/haraldk/TwelveMonkeys/releases
@@ -71,7 +69,7 @@ dependencies {
 
     // TODO check JUnit and Gradle updates and remove this workaround asap
     // gradle 7.5 + JUnit workaround for NoClassDefFoundError: org/junit/platform/launcher/LauncherSessionListener
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.1")
 }
 
 intellij {
@@ -96,6 +94,48 @@ testlogger {
 }
 
 tasks {
+    register("verifyProductDescriptor") {
+        // Ensure generated plugin requires a paid license
+        doLast {
+            val pluginXmlStr = pluginXmlFile.readText()
+            if (!pluginXmlStr.contains("<product-descriptor")) {
+                throw GradleException("plugin.xml: Product Descriptor is missing")
+            }
+        }
+    }
+    register("removeLicenseRestrictionFromPluginXml") {
+        // Remove paid license requirement
+        doLast {
+            logger.warn("----------------------------------------------------------------")
+            logger.warn("/!\\ Will build a plugin which doesn't ask for a paid license /!\\")
+            logger.warn("----------------------------------------------------------------")
+            var pluginXmlStr = pluginXmlFile.readText()
+            pluginXmlStr = pluginXmlStr.replace(Regex(
+                "<product-descriptor code=\"PEXTRAICONS\" release-date=\"\\d+\" release-version=\"\\d+\"/>"),
+                "")
+            pluginXmlFileBackup.delete()
+            FileUtils.moveFile(pluginXmlFile, pluginXmlFileBackup)
+            FileUtils.write(pluginXmlFile, pluginXmlStr, "UTF-8")
+            logger.debug("Saved a copy of $pluginXmlFile to $pluginXmlFileBackup")
+        }
+    }
+    register("restorePluginXml") {
+        // Task removeLicenseRestrictionFromPluginXml worked with a modified version of plugin.xml file -> restore original file
+        doLast {
+            FileUtils.copyFile(pluginXmlFileBackup, pluginXmlFile)
+            pluginXmlFileBackup.delete()
+            logger.debug("Restored original $pluginXmlFile from $pluginXmlFileBackup")
+        }
+    }
+    register("renameDistributionNoLicense") {
+        // Rename generated plugin file to mention the fact that no paid license is needed
+        doLast {
+            val baseName = "build/distributions/Extra Icons-$version"
+            val noLicFile = projectDir.resolve("${baseName}-no-license.zip")
+            noLicFile.delete()
+            FileUtils.moveFile(projectDir.resolve("${baseName}.zip"), noLicFile)
+        }
+    }
     withType<JavaCompile> {
         sourceCompatibility = pluginJavaVersion
         targetCompatibility = pluginJavaVersion
@@ -172,6 +212,20 @@ tasks {
     }
     buildSearchableOptions {
         enabled = false
+    }
+    patchPluginXml {
+        if (!pluginNeedsLicense.toBoolean()) {
+            dependsOn("removeLicenseRestrictionFromPluginXml")
+        } else {
+            if (pluginVerifyProductDescriptor.toBoolean()) {
+                dependsOn("verifyProductDescriptor")
+            }
+        }
+    }
+    buildPlugin {
+        if (!pluginNeedsLicense.toBoolean()) {
+            finalizedBy("restorePluginXml", "renameDistributionNoLicense")
+        }
     }
 }
 

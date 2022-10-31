@@ -1,7 +1,13 @@
 # Extra Icons Change Log
 
-## 2022.1.12 (WIP)
-* add graphql-resolver, Rego and Mongodb icons. Improve icons detection mechanism. Thx to contributor **fcannizzaro**.
+## 2022.1.13 (WIP, planned for 2022/11/11)
+* set minimal IDE version to 2022.1 and fix usage of a deprecated API used to query IDE filename index.
+* [fix #113](https://github.com/jonathanlermitage/intellij-extra-icons-plugin/issues/113) can't load custom icons from local drive on Windows.
+* internal: upgrade TwelveMonkeys library to 3.9.3 (used to preview PNG icons).
+
+## 2022.1.12 (2022/10/15)
+* add graphql-resolver, Rego and Mongodb icons. Improve frameworks detection mechanism. Thx to contributor **fcannizzaro**.
+* I'm working on tooling and preparing the support for the 2023 IDEs. That's why this changelog will probably be a bit poor until next year. Meanwhile, bugfixes remain my priority, so don't hesitate to raise issues.
 
 ## 2022.1.11 (2022/09/16)
 * [feat #110](https://github.com/jonathanlermitage/intellij-extra-icons-plugin/issues/110) config panel: add a text input field to test the conditions for User icons.

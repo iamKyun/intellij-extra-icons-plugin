@@ -10,13 +10,15 @@ else
     gradlew_cmd := ./gradlew
 endif
 
+ij_min_version := 2022.1 # must reflect settings.xml -> idea-version.since-build
+
 
 default: help
 
 
 .PHONY: intro
 intro:
-	@echo -e '\n\e[1;34m------ [ij-extra-icons] $(shell date) ------\e[0m\\n'
+	@echo -e '\n\e[1;34m------ [ij-extra-icons] $(shell date) ------\e[0m\n'
 
 
 .PHONY: log
@@ -36,7 +38,7 @@ fixgit: intro ## fix executable permission flag on git index for required files
 
 
 .PHONY: run
-run: intro ## run plugin in IntelliJ Ultimate
+run: intro ## run plugin in latest stable IntelliJ Ultimate
 	${gradlew_cmd} buildPlugin runIde --warning-mode all
 
 
@@ -47,12 +49,17 @@ runeap: intro ## run plugin in latest IntelliJ Ultimate EAP Snapshot
 
 .PHONY: runold
 runold: intro ## run plugin in oldest supported IntelliJ Ultimate version
-	${gradlew_cmd} buildPlugin runIde --warning-mode all -PpluginIdeaVersion=IU-2021.2.4 -PpluginDownloadIdeaSources=false
+	${gradlew_cmd} buildPlugin runIde --warning-mode all -PpluginIdeaVersion=IU-${ij_min_version} -PpluginDownloadIdeaSources=false
 
 
 .PHONY: build
-build: intro ## build and package plugin to build/distribution/ (see generated ZIP file)
+build: intro ## build and package a plugin to build/distribution/ (see generated ZIP file)
 	${gradlew_cmd} clean buildPlugin test verifyPlugin --warning-mode all -PpluginVerifyProductDescriptor=true
+
+
+.PHONY: buildfree
+buildfree: intro ## build and package a plugin which doesn't ask for a paid license to build/distribution/ (see generated ZIP file)
+	${gradlew_cmd} clean buildPlugin test verifyPlugin --warning-mode all -PpluginNeedsLicense=false
 
 
 .PHONY: test

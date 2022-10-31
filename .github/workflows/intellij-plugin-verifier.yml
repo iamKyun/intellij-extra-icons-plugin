@@ -17,6 +17,9 @@ jobs:
       - name: Build the plugin using Gradle
         run: ./gradlew buildPlugin
 
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
       - name: Verify Plugin on IntelliJ Platforms
         id: verify
         uses: ChrisCarini/intellij-platform-plugin-verifier-action@latest
@@ -24,10 +27,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           ide-versions: |
-            ideaIC:2021.2.4
-            ideaIU:2021.2.4
-            ideaIC:2022.2.2
-            ideaIU:2022.2.2
+            ideaIC:2022.1
+            ideaIU:2022.1
+            ideaIC:2022.2.3
+            ideaIU:2022.2.3
           failure-levels: | # see https://github.com/ChrisCarini/intellij-platform-plugin-verifier-action#failure-levels
             OVERRIDE_ONLY_API_USAGES
             NON_EXTENDABLE_API_USAGES

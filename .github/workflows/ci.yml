@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ij: [ 2021.2.4, 2022.2.2 ]
+        ij: [ 2022.1, 2022.2.3 ]
     steps:
       - uses: actions/checkout@v3
       - name: Setup Java
@@ -13,6 +13,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 11
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
       - name: Build and verify
         run: ./gradlew clean buildPlugin test verifyPlugin -PpluginIdeaVersion=IU-${{ matrix.ij }} --warning-mode all
-
