@@ -6,7 +6,6 @@ import com.palantir.gradle.gitversion.VersionDetails
 import groovy.lang.Closure
 import org.apache.commons.io.FileUtils
 import org.jetbrains.intellij.tasks.RunPluginVerifierTask
-import java.io.StringWriter
 import java.util.EnumSet
 
 fun properties(key: String) = project.findProperty(key).toString()
@@ -14,8 +13,8 @@ fun properties(key: String) = project.findProperty(key).toString()
 plugins {
     id("java")
     id("jacoco")
-    id("org.jetbrains.intellij") version "1.9.0" // https://github.com/JetBrains/gradle-intellij-plugin https://lp.jetbrains.com/gradle-intellij-plugin/
-    id("com.github.ben-manes.versions") version "0.42.0" // https://github.com/ben-manes/gradle-versions-plugin
+    id("org.jetbrains.intellij") version "1.10.0" // https://github.com/JetBrains/gradle-intellij-plugin https://lp.jetbrains.com/gradle-intellij-plugin/
+    id("com.github.ben-manes.versions") version "0.44.0" // https://github.com/ben-manes/gradle-versions-plugin
     id("com.adarshr.test-logger") version "3.2.0" // https://github.com/radarsh/gradle-test-logger-plugin
     id("com.jaredsburrows.license") version "0.9.0" // https://github.com/jaredsburrows/gradle-license-plugin
     id("com.osacky.doctor") version "0.8.1" // https://github.com/runningcode/gradle-doctor/
@@ -57,26 +56,21 @@ repositories {
 
 val twelvemonkeysVersion = "3.9.3"
 val junitVersion = "5.9.1"
+val junitPlatformLauncher = "1.9.1"
 
 dependencies {
     implementation("com.twelvemonkeys.imageio:imageio-core:$twelvemonkeysVersion") // https://github.com/haraldk/TwelveMonkeys/releases
-    // TODO Apache Batik is bundled with IJ and IJ-based IDEs (tested with PyCharm Community). If needed, see how to
-    //  integrate org.apache.xmlgraphics:batik-all:1.14 without failing to load org.apache.batik.anim.dom.SAXSVGDocumentFactory
     implementation("com.twelvemonkeys.imageio:imageio-batik:$twelvemonkeysVersion") // SVG support
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
-
-    // TODO check JUnit and Gradle updates and remove this workaround asap
-    // gradle 7.5 + JUnit workaround for NoClassDefFoundError: org/junit/platform/launcher/LauncherSessionListener
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitPlatformLauncher")
 }
 
 intellij {
     downloadSources.set(pluginDownloadIdeaSources.toBoolean() && !System.getenv().containsKey("CI"))
     instrumentCode.set(true)
     pluginName.set("Extra Icons")
-    plugins.set(listOf("AngularJS"))
     sandboxDir.set("${rootProject.projectDir}/.idea-sandbox/${shortenIdeVersion(pluginIdeaVersion)}")
     updateSinceUntilBuild.set(false)
     version.set(pluginIdeaVersion)
@@ -144,12 +138,6 @@ tasks {
     }
     withType<Test> {
         useJUnitPlatform()
-
-        // TODO check JUnit and Gradle updates and remove this workaround asap
-        // gradle 7.5 + JUnit workaround https://docs.gradle.org/7.5/userguide/upgrading_version_7.html#removes_implicit_add_opens_for_test_workers
-        jvmArgs("--add-opens=java.base/java.io=ALL-UNNAMED")
-        jvmArgs("--add-opens=java.base/java.lang=ALL-UNNAMED")
-        jvmArgs("--add-opens=java.base/java.util=ALL-UNNAMED")
     }
     jacocoTestReport {
         reports {
@@ -163,27 +151,16 @@ tasks {
         checkForGradleUpdate = true
         gradleReleaseChannel = "current"
         revision = "release"
-        resolutionStrategy {
-            componentSelection {
-                all {
-                    if (isNonStable(candidate.version)) {
-                        logger.debug(" - [ ] ${candidate.module}:${candidate.version} candidate rejected")
-                        reject("Not stable")
-                    } else {
-                        logger.debug(" - [X] ${candidate.module}:${candidate.version} candidate accepted")
-                    }
-                }
-            }
+        rejectVersionIf {
+            isNonStable(candidate.version)
         }
         outputFormatter = closureOf<Result> {
             unresolved.dependencies.removeIf {
                 val coordinates = "${it.group}:${it.name}"
                 coordinates.startsWith("unzipped.com") || coordinates.startsWith("com.jetbrains:ideaI")
             }
-            val plainTextReporter = PlainTextReporter(project, revision, gradleReleaseChannel)
-            val writer = StringWriter()
-            plainTextReporter.write(writer, this)
-            logger.quiet(writer.toString().trim())
+            PlainTextReporter(project, revision, gradleReleaseChannel)
+                .write(System.out, this)
         }
     }
     runIde {

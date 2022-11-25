@@ -14,12 +14,13 @@
         <li>Configurable: see <i>File &gt; Settings &gt; Appearance &amp; Behavior &gt; Extra Icons</i> to select extra icons to (de)activate. This is configurable at IDE and project level.</li>
         <li>You can also register your own icons in order to override file icons and all <a href="https://jetbrains.design/intellij/resources/icons_list/">IDE icons</a> (including toolbars, menus, etc.).</li>
         <li>For more information, please see this <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin/blob/master/docs/GET_STARTED.md">guide</a>.</li>
-        <li>For questions about the plugin licensing model, how to get a license for free (students, teachers and OSS developers), and how to get a perpetual license, please see the <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin/blob/master/docs/LICENSE_FAQ.md">license FAQ</a>.</li>
+        <li>For questions about the plugin licensing model, how to get a license for free (students and teachers), and how to get a perpetual license, please see the <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin/blob/master/docs/LICENSE_FAQ.md">license FAQ</a>.</li>
       </ul>
       📢 Please don't trust the plugin's low rating. It had ~5 stars until I decided to ask for modest financial support starting from March 2022.
       Some narrow-minded people organized a review-bombing against my plugin (and sent me very aggressive emails, sometimes death threats;
       seriously... they're crazy), which is why you see many 1-star ratings. JetBrains support accepted to remove most of the toxic reviews,
       but unfortunately, they refused to remove the 1-star ratings...<br>
+      If you want to help plugin developers, please consider <a href="https://youtrack.jetbrains.com/issue/MP-4248">up-voting YouTrack issue MP-4248</a>. Thank you!
       <br>
       <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin">GitHub</a> | <a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin/issues">Issues</a> | <a href="https://www.linkedin.com/in/jonathan-lermitage/">LinkedIn</a> | <a href="https://vshymanskyy.github.io/StandWithUkraine/">💙 Help Ukraine 💛</a>
     ]]>
@@ -32,7 +33,7 @@
     -->
 
     <change-notes><![CDATA[
-    2022.1.13 (WIP)
+    2022.1.13 (2022/11/11)
     <ul>
       <li>set minimal IDE version to 2022.1 and fix usage of a deprecated API used to query IDE filename index.</li>
       <li><a href="https://github.com/jonathanlermitage/intellij-extra-icons-plugin/issues/113">fix #113</a> can't load custom icons from local drive on Windows.</li>
@@ -100,8 +101,6 @@
                              displayName="Project" parentId="LermitageExtraIcons"/>
         <notificationGroup id="ExtraIcons" displayType="BALLOON"/>
     </extensions>
-
-    <depends optional="true" config-file="angular2.xml">AngularJS</depends>
 
     <actions>
     </actions>
